@@ -1,2 +1,4 @@
 /Thread_and_copy/build/
 /Thread_and_copy/dist/
+
+*.out
