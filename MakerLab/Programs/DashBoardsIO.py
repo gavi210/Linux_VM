@@ -1,5 +1,5 @@
 from sense_emu import SenseHat
-import time
+from time import sleep
 from Adafruit_IO import Client, Data, Feed, RequestError
 
 from AdafruitLogIn import username, key #import username and key for logging in into the AdafruitIo

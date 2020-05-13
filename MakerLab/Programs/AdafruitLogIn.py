@@ -1,3 +1,3 @@
 
 username = "rrigoni"
-key = "aio_GzhX49uvq5d1hflaeOKr5bGqR1bh"
+key = "aio_vljq97twv4gQ8zUEdJOmMizk0CMh"
