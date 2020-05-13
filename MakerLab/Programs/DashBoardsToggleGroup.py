@@ -35,7 +35,7 @@ def show_color(color):
     for i in range(8):
         for j in range(8):
             sense.set_pixel(i,j, colors[color])
-            sleep(0.02)
+        sleep(0.1)
 
 def get_active_feed():
     activeFeed = {}
@@ -48,11 +48,8 @@ def show_active_colors(active_feeds):
     for active in active_feeds:
         if(active_feeds[active] == 'ON'):
             show_color(feed_color[active])
-
         else:
             pass
-
-
 
 while True:
     sense.clear()
@@ -60,7 +57,8 @@ while True:
         active_feeds = get_active_feed()
         print(active_feeds)
         show_active_colors(active_feeds)
-        sleep(0.5)
+        sleep(0.1)
+        sense.clear()
     except KeyboardInterrupt:
         sense.clear()
-        pass
+        break
