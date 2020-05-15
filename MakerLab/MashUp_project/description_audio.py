@@ -21,12 +21,13 @@ def play_instructions():
   os.chdir('.')
 
 #function for creating the descrption file audio
-def create_description_audio():
+def create_audio():
     os.chdir('audio')
 
-    text = 'Pull the joystick UP for the weather conditions under the ISS space station. Pull down for see the magic!'
+    # text = 'Pull the joystick UP for the weather conditions under the ISS space station. Pull down for see the magic!'
+    text = 'The nearest weather station is not currently working'
     text_audio = gTTS(text=text, lang='en')
-    text_audio.save('functionalities.mp3')
+    text_audio.save('not_working.mp3')
     os.chdir('.')
 
-#create_description_audio()
+create_description_audio()
