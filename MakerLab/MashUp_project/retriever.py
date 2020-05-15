@@ -19,17 +19,30 @@ def get_iss_position():
   #return a dictionaty with lat and long values
   return position
 
-def nearest_pi(position):
+def get_weather_stations():
   url = 'https://apex.oracle.com/pls/apex/raspberrypi/weatherstation/getallstations'
 
   response = urllib.request.urlopen(url)
 
   result = json.loads(response.read())
   result = result['items']
+  return result
+
+def get_specific_station(weather_station):
+  url = 'https://apex.oracle.com/pls/apex/raspberrypi/weatherstation/getlatestmeasurements'
+  id = closest_weather_station['weather_stn_id']
+  url = url + '/' + str(id)
+
+  response = urllib.request.urlopen(url)
+
+  result = json.loads(response.read())
+  return result
+
+def nearest_pi(position, stations_list):
   
   min_distance = -1
   closest_weather_station = None
-  for weather_station in result:
+  for weather_station in stations_list:
     position1 = {}
     position1['lat'] = weather_station['weather_stn_lat']
     position1['lon'] = weather_station['weather_stn_long']
@@ -45,23 +58,21 @@ def nearest_pi(position):
   return closest_weather_station
 
 def retrieve_weather(closest_weather_station):
-  url = 'https://apex.oracle.com/pls/apex/raspberrypi/weatherstation/getlatestmeasurements'
-  id = closest_weather_station['weather_stn_id']
-
-  url = url + '/' + str(id)
-
-  response = urllib.request.urlopen(url)
-
-  result = json.loads(response.read())
+  result = get_specific_station(closest_weather_station)
   
   #check if the list is empty 
-  contains = bool(result['items'] == [])
+  not_contains = bool(result['items'] == [])
 
-  if(not contains): 
-     
+  if(not_contains): 
+    return -1
+  else:
+    print(result)
+    result = result['items'][0]
+    weather_description = 'Temperature: ' + str(result['ambient_temp'])
+    return weather_description
 
-  print(result)
 
 dictionary = get_iss_position()
-closest_weather_station = nearest_pi(dictionary)
+stations_list = get_weather_stations()
+closest_weather_station = nearest_pi(dictionary, stations_list)
 retrieve_weather(closest_weather_station)
