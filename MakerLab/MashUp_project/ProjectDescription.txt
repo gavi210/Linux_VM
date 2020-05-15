@@ -1,0 +1,21 @@
+Mash-Up project
+
+the project allows a person to looks at the position of the Iss station in that moment, then find the weather conditions retrieved by the nearest RaspBerryPi
+and compare them which the conditions of the our RaspBerryPi
+
+if conditions are better -> "you stay better then astronauts"  + win sound 
+then say "astronauts stay better then you" + lose sound
+
+Helpful informations
+1) http://api.open-notify.org/iss-now.json -> link where the Iss station is in that moment (https://projects.raspberrypi.org/en/projects/where-is-the-space-station/4)
+2) all informations related to iss station and Weather are in Sensehat 2
+
+
+How interact 
+press middle button for let the user knows the functionalities
+press up for retrieve location of the iss, search for the nearest weather station and tell their conditions, then show to the matrix red, green, yellow based on conditions
+press down to retrieve current temperature and then search for where in the world it would stay better
+
+
+References
+pygame (instructions) audio-and-speech-mehdi.pdf slides
