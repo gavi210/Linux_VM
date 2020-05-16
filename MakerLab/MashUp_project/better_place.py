@@ -18,9 +18,11 @@ def better_place(current_temperature):
     if(not_contains):
       pass
     else:
-      temperature = items[0]['ambient_temp']
+      temperature = items['items'][0]['ambient_temp']
       if (temperature > current_temperature):
         possibilities.append(weather_station)
       else:
         pass
-  return choice(possibilities)
+  random_station = choice(possibilities)
+  output = 'You will stay better near the ' + random_station['created_by'] + '. Here the temperature is ' + (random_station['ambient_temp'] - current_temperature)+ ' degrees warmer'
+  return output

@@ -7,4 +7,11 @@ def compute_distance(position, position1):
 
   distance = math.sqrt(math.pow(diff_lat,2) + math.pow(diff_lon,2))
 
-  return distance 
+  return distance
+
+def pressed_events(events):
+    pressed_events = []
+    for i in range(len(events)):
+        if(events[i].action == 'pressed'):
+            pressed_events.append(events[i])
+    return pressed_events

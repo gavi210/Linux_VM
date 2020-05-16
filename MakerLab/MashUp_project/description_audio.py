@@ -2,45 +2,51 @@
 from pygame import mixer
 import os
 from gtts import gTTS
+from retriever import get_iss_position, get_weather_stations, nearest_pi, retrieve_weather
+from better_place import get_temperature_emu, better_place
 
-def play_name(file):
+def play_audio(file, mixer):
+  os.chdir('audio')
+
   #play the audio
-  mixer.init()
-  mixer.music.load(file)
+  #mixer.init()
+  mixer.music.load(file + '.mp3')
+  os.chdir('..')
   mixer.music.play()
 
   #while it it busy, wait
   while mixer.music.get_busy() == True:
     pass
+  return
 
-def get_source(name):
-  #change working directory in oredr to get the description file audio
-  os.chdir('audio')
-  
-  mixer.init()
-  audio_file = mixer.load(name + '.mp3')
-
-  #change back the working directory
-  os.chdir('.')
-
-  return audio_file
-  
 #function for creating the descrption file audio
-def create_audio():
+def create_audio(text, file_name):
     os.chdir('audio')
-
-    # text = 'Pull the joystick UP for the weather conditions under the ISS space station. Pull down for see the magic!'
-    text = 'The nearest weather station is not currently working'
-    text_audio = gTTS(text=text, lang='en')
-    text_audio.save('not_working.mp3')
-    os.chdir('.')
+    audio = gTTS(text=text, lang='en')
+    audio.save(file_name + '.mp3')
+    os.chdir('..')
+    return
 
 def better_location_name(name):
-  os.chdir('audio')
-
   text = 'Based on the temperature, you\'ll stay better at' + name
-  text_audio = gTTS(text=text, lang='en')
+  return text
 
-  #return a file audio to be played
+def play_up(mixer):
+    dictionary = get_iss_position()
+    stations_list = get_weather_stations()
+    closest_weather_station = nearest_pi(dictionary, stations_list) #find the closest weather station
+    output = retrieve_weather(closest_weather_station)
+
+    create_audio(output, 'play_up')
+    play_audio('play_up', mixer)
+    return
+
+def play_down(mixer, sense):
+    current_temperature = get_temperature_emu(sense)
+    text = better_place(current_temperature)
+
+    create_audio(text, 'play_down')
+    play_audio('play_down', mixer)
+    return
 
 #create_audio()
