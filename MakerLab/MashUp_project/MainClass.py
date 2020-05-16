@@ -27,7 +27,7 @@ while True:
         sense.clear()
         while mixer.music.get_busy():
             pass
-        create_audio('Bye Bye', 'bye')
+        #create_audio('Bye Bye', 'bye')
         play_audio('bye', mixer)
         print('Bye Bye')
         break

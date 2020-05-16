@@ -8,8 +8,6 @@ from better_place import get_temperature_emu, better_place
 def play_audio(file, mixer):
   os.chdir('audio')
 
-  #play the audio
-  #mixer.init()
   mixer.music.load(file + '.mp3')
   os.chdir('..')
   mixer.music.play()
@@ -36,9 +34,11 @@ def play_up(mixer):
     stations_list = get_weather_stations()
     closest_weather_station = nearest_pi(dictionary, stations_list) #find the closest weather station
     output = retrieve_weather(closest_weather_station)
-
-    create_audio(output, 'play_up')
-    play_audio('play_up', mixer)
+    if(output == -1): #current weather station not working
+      play_audio('not_working', mixer)
+    else:
+      create_audio(output, 'play_up')
+      play_audio('play_up', mixer)
     return
 
 def play_down(mixer, sense):

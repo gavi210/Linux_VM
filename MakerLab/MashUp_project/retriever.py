@@ -64,7 +64,7 @@ def retrieve_weather(closest_weather_station):
   not_contains = bool(result['items'] == [])
 
   if(not_contains):
-    return 'The nearest weather station in not working now'
+    return -1
   else:
     print(result)
     result = result['items'][0]
