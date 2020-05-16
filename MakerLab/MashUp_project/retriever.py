@@ -38,38 +38,33 @@ def get_specific_station(weather_station):
   result = json.loads(response.read())
   return result
 
-def nearest_pi(position, stations_list):
+def decreasing_distance_order(position, stations_list):
+  #this method orders the list of weather stations based on the distance
+  #map has as key the distance and as value the weather_station
+  nearest_order = {}
 
-  min_distance = -1
-  closest_weather_station = None
   for weather_station in stations_list:
     position1 = {}
     position1['lat'] = weather_station['weather_stn_lat']
     position1['lon'] = weather_station['weather_stn_long']
 
-    if(min_distance == -1): #first time in the loop
-      min_distance = compute_distance(position, position1)
-      closest_weather_station = weather_station
-    else:
-      possible_min = compute_distance(position, position1)
-      if(possible_min < min_distance and possible_min > 0):
-        min_distance = possible_min
-        closest_weather_station = weather_station
-  return closest_weather_station
+    distance = compute_distance(position, position1)
+    nearest_order[distance] = weather_station
 
-def retrieve_weather(closest_weather_station):
-  result = get_specific_station(closest_weather_station)
+  #return a list of touples (<distance>, <weather station>)
+  return sorted(nearest_order.items())
 
-  #check if the list is empty
-  not_contains = bool(result['items'] == [])
+def nearest_working(ordered_station_list):
+    #method check and retrieve the nearest station that is currently working
+    for (distance, weather_station) in ordered_station_list:
+        station_description = get_specific_station(weather_station)
+        not_contains = bool(station_description['items'] == [])
 
-  if(not_contains):
-    return -1
-  else:
-    print(result)
-    result = result['items'][0]
-    weather_description = 'The nearest weather station is ' + result['created_by'] + '. The temperature: ' + str(result['ambient_temp']) + ' degrees'
-    return weather_description
-
-
-
+        if(not_contains):
+            pass
+        else:
+            station_description = station_description['items'][0]
+            weather_description = 'The nearest weather station is ' + station_description['created_by']
+            weather_description += '. The temperature: ' + str("{:.2f}".format(station_description['ambient_temp'])) + ' degrees'
+            return weather_description
+    return 'No weather stations are currently working'

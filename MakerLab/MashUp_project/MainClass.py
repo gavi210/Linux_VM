@@ -22,12 +22,12 @@ while True:
                 play_audio('functionalities', mixer)
             elif(event.direction == 'down'):
                 play_down(mixer, sense)
-        #play_audio('functionalities', mixer)
+
     except KeyboardInterrupt:
         sense.clear()
         while mixer.music.get_busy():
             pass
-        #create_audio('Bye Bye', 'bye')
+
         play_audio('bye', mixer)
         print('Bye Bye')
         break

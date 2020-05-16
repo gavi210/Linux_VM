@@ -2,7 +2,7 @@
 from pygame import mixer
 import os
 from gtts import gTTS
-from retriever import get_iss_position, get_weather_stations, nearest_pi, retrieve_weather
+from retriever import get_iss_position, get_weather_stations, decreasing_distance_order, nearest_working
 from better_place import get_temperature_emu, better_place
 
 def play_audio(file, mixer):
@@ -32,13 +32,14 @@ def better_location_name(name):
 def play_up(mixer):
     dictionary = get_iss_position()
     stations_list = get_weather_stations()
-    closest_weather_station = nearest_pi(dictionary, stations_list) #find the closest weather station
-    output = retrieve_weather(closest_weather_station)
-    if(output == -1): #current weather station not working
-      play_audio('not_working', mixer)
-    else:
-      create_audio(output, 'play_up')
-      play_audio('play_up', mixer)
+    #list of stations -> [0] nearest -> [len()] most far away
+    stations_list = decreasing_distance_order(dictionary, stations_list)
+
+    #function for finding the nearest one that is working
+    output = nearest_working(stations_list)
+
+    create_audio(output, 'play_up')
+    play_audio('play_up', mixer)
     return
 
 def play_down(mixer, sense):
