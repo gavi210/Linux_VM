@@ -2,8 +2,8 @@
 from pygame import mixer
 import os
 from gtts import gTTS
-from retriever import get_iss_position, get_weather_stations, decreasing_distance_order, nearest_working
-from better_place import get_temperature_emu, better_place
+from utilities.better_place import get_temperature_emu, better_place_method
+from utilities.retriever import get_iss_position, get_weather_stations, decreasing_distance_order, nearest_working
 
 def play_audio(file, mixer):
   os.chdir('audio')

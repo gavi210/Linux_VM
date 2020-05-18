@@ -1,7 +1,7 @@
 #this is the main classmethod
 from sense_emu import SenseHat
-from description_audio import create_audio, play_audio, play_up, play_down
-from support_methods import pressed_events
+from utilities.description_audio import create_audio, play_audio, play_up, play_down
+from utilities.support_methods import pressed_events
 from pygame import mixer
 import time
 

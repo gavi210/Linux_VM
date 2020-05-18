@@ -1,14 +1,14 @@
 #this class used to retrieve a better place in which to be -> higher temperature -> better place
-from retriever import get_weather_stations, get_specific_station
+from utilities.retriever import get_weather_stations, get_specific_station
 from random import choice
-from support_methods import random_list
+from utilities.support_methods import random_list
 
 def get_temperature_emu(sense):
   current_temperature = sense.get_temperature()
 
   return current_temperature
 
-def better_place(current_temperature):
+def better_place_method(current_temperature):
   weather_stations = get_weather_stations()
   weather_stations = random_list(weather_stations)
 

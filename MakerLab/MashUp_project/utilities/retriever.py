@@ -3,7 +3,7 @@
 
 import urllib.request
 import json
-from support_methods import compute_distance
+from utilities.support_methods import compute_distance
 
 def get_iss_position():
   url = 'http://api.open-notify.org/iss-now.json'
